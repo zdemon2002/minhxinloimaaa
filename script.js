@@ -1,8 +1,26 @@
+const NOTIFY_EMAIL = "zdemon2002@gmail.com";
+
 const heartsEl = document.querySelector(".hearts");
 const yesBtn = document.getElementById("yes");
 const noBtn = document.getElementById("no");
 const btns = document.getElementById("btns");
 const done = document.getElementById("done");
+
+function sendNotifyEmail() {
+  return fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      _subject: "She said YES! 💕",
+      message: `She clicked Yes on your apology website!\n\nTime: ${new Date().toLocaleString()}`,
+      _captcha: "false",
+      _template: "table",
+    }),
+  });
+}
 
 ["♥", "💕", "✨", "💙"].forEach((s, i) => {
   for (let j = 0; j < 5; j++) {
@@ -31,4 +49,5 @@ noBtn.addEventListener("click", () => {
 yesBtn.addEventListener("click", () => {
   btns.style.display = "none";
   done.classList.remove("hidden");
+  sendNotifyEmail().catch(() => {});
 });
